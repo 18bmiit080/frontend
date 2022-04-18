@@ -3,7 +3,7 @@ import logos from "./images/logo.jpg"
 import ddd from "./images/dlogo.png"
 import docc from "./images/doc.png"
 import shedd from "./images/shed.jpg"
-
+import {Link} from 'react-router-dom'
 const Dashr_doc = () => {
   return (
     <>
@@ -123,47 +123,25 @@ const Dashr_doc = () => {
                     </div>
 
                     <div class="tab-pane fade shadow rounded bg-white p-5" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab"  style={{width:"80%",height:"500px",marginTop:"30px"}}>
-                    <div class="table table-hover">
-                                <div class="table table-bordered">
-                                <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">PATIENT_ID</th>
-                                            <th scope="col">PATIENT NAME</th>
-                                            <th scope="col">EMAIL</th>
-                                            <th scope="col">DOCTOR</th>
-                                            <th scope="col">ACTION</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>John</td>
-                                            <td>Doe</td>
-                                            <td>jhon@email.com</td>
-                                            <td>USA</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>mark@email.com</td>
-                                            <td>UK</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>jacob@email.com</td>
-                                            <td>AU</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                                </div>
-                           
-                            </div> 
+                    <div class="container" style={{height:"500%",width:"50%",marginTop:"40px"}}>
+<div class="row" >
+    <div class="col-8" style={{marginLeft:"60px"}} >
+        <div class="card card-margin">
+            <div class="card-header no-border">
+                <h5 class="card-title">Doctor Name</h5>
+            </div>
+            <div class="card-body pt-0">
+                    <div class="widget-49-meeting-action">
+                        <Link to={"/receptionist_frontend/dashr_doc/doc_shed"} class="btn btn-sm btn-flash-border-primary">View All</Link>
+                    </div>
+               
+            </div>
+</div>
+</div>
+</div>
+
+
+</div>
                     </div>
                 </div>
             </div>

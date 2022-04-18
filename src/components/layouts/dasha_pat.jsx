@@ -1,8 +1,167 @@
-import React from 'react'
+import React, { Component, useEffect, useState } from "react";
+import axios from "axios"
 import logos from "./images/logo.jpg"
 import { Link } from 'react-router-dom';
+import $ from "jquery";
+import "jquery/dist/jquery.min.js";
+import { ModalBody } from "react-bootstrap";
 
 const Dasha_pat = () => {
+    const [user, setUser] = useState([])
+    const [pname,setpName] = useState("");
+    const [Id,setID] = useState("");
+    
+    function fillupdateform(id,pname){
+       console.warn(pname)
+       setpName(pname)
+       setID(id)
+    }
+
+    const fetchData = () => {
+      const config = {
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+      };
+  
+      axios.get( "http://localhost:5000/frontend/api/user/getAllUser", config).then((res) => {
+        setUser(res.data);
+        console.log(res);
+        console.log(res.data.data);
+      });
+    //   //initialize datatable
+    //   $(document).ready(function () {
+    //     setTimeout(function () {
+    //       $("#exampledemos").DataTable();
+    //     }, 1000);
+    //   });
+    };
+
+    // const deleteContact = async(id) =>
+    // { // <-- declare id parameter
+    //     await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`) // <-- remove ;
+    //     .then(res => {
+    //        console.log(res);
+    //        console.warn(res);
+    //     });
+    // };
+
+    // function deleteContact (id) {
+    //         alert(id)
+    //         axios.delete(`http://localhost:5000/frontend/dash_pat/api/user/${id}`,{
+    //             method:'DELETE'
+    // }).then((result)=>{
+    //     result.json().then((res)=>{
+    //         console.warn(res)
+    // })
+    //         })
+    // }
+
+    // const deleteContact = (id ,e ) => {
+    //     e.preventDefault()
+    //     alert(id)
+    //     axios.delete(`http://localhost:5000/frontend/api/user/${id}`)
+    //     .then(res => {
+    //         console.log('deleted!!',res)
+
+    //     }).catch(err => console.log(err))
+    // }
+
+
+    
+    const deleteContact = (id ,e ) => {
+        e.preventDefault()
+        alert(id)
+        axios.post("http://localhost:5000/frontend/api/user/deleteone",{id})
+        .then(res => {
+            console.log('deleted!!',res)
+            fetchData()
+
+        }).catch(err => console.log(err))
+    }
+
+
+    // const updateUser = async (e) => {
+    //     console.log("update button clicked!");
+    //     const userId = Id
+    //     console.log(userId);
+    //     e.preventDefault();
+
+    // const updateCompany = {
+    // userId,
+    //  pname
+    // };
+
+    // try {
+    //   const config = {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   };
+
+    //   const body = JSON.stringify(updateCompany);
+    //   const res = await axios.put(
+    //     "http://localhost:5000/frontend/api/user/updateone",{userId},
+    //     body,
+    //     config
+    //   );
+    //   console.log(res.data.data);
+    // } catch (err) {
+    //   console.log(err.response.data);
+    // }
+    // }
+
+
+    const updateUser = async(e) => {
+        e.preventDefault();
+        let newid = Id
+      let newname = pname
+      try{
+        const config = {
+          header:{
+            "Content-Type": "application/json"
+          }
+        }
+        const dept = { "id": newid, "pname": newname };
+        const res = await axios.post("http://localhost:5000/frontend/api/user/updateone", dept, config);
+        console.log("updated!")
+        if(res.status === 200){
+            console.log("sucessfull")
+            fetchData()
+        }
+      
+      }
+      catch(err){
+       console.log(err.response.data);
+      
+      }
+    }
+    // const updateUser = (id,pname) => {
+    //    const formData = new FormData();
+    //     formData.append('pname',pname)
+    //     axios.post("http://localhost:5000/frontend/api/user/updateone",{id})
+    //     .then(res => {
+    //         console.log('updated!!',res)
+
+    //     }).catch(err => console.log(err))
+    // }
+
+    // const updateContact = (id ,e ) => {
+    //     e.preventDefault()
+    //     alert(id)
+    //     axios.post("http://localhost:5000/frontend/api/user/viewone",{id})
+    //     .then(res => {
+    //         console.log('deleted!!',res)
+    //         let item = pname(id)
+    //     }).catch(err => console.log(err))
+        
+        
+    //  }
+    useEffect(() => {
+      fetchData();
+    //   deleteContact();
+    }, []);
+
   return (
     <>
 <div  class="table-responsive">
@@ -48,48 +207,50 @@ const Dasha_pat = () => {
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">SR.NO</th>
-                                            <th scope="col">PATIENT NAME</th>
-                                            <th scope="col">ADDRESS</th>
-                                            <th scope="col">GENDER</th>
-                                            <th scope="col">EMAIL</th>
-                                            <th scope="col">CONTACT NO</th>
+                                            <th>PATIENT NAME</th>
+                                            <th>ADDRESS</th>
+                                            {/* <th>GENDER</th> */}
+                                            <th>EMAIL</th>
+                                            <th>CONTACT NO</th>
+                                            <th>Operation</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>John</td>
-                                            <td>Doe</td>
-                                            <td>jhon@email.com</td>
-                                            <td>USA</td>
-                                            <td>123</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>mark@email.com</td>
-                                            <td>UK</td>
-                                            <td>456</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>jacob@email.com</td>
-                                            <td>AU</td>
-                                            <td>789</td>
-                                        </tr>
+                                    {user.map((data,k) => {
+              return (
+                <tr key={data._id}>
+                    <td>{k}</td>
+                  <td>{data.pname}</td>
+                  <td>{data.address}</td>
+                  <td>{data.email}</td>
+                <td>{data.contact_no}</td>
+                 <td> <button onClick={(e)=>deleteContact(data._id,e)} >Remove</button></td>
+                 <button onClick={()=>{fillupdateform(data._id,data.pname);}}>Update</button> 
+                </tr>
+              );
+            })}
+
                                     </tbody>
                                 </table>
                             </div>
                                 </div>
                            
-                            </div>  
+                            </div> 
+                            
+                           
+                            
+                            
+                            
+                           
                         </div>
                     </div>
                 </div>
+                <form onSubmit={e => updateUser(e)}
+                        method="post">
+                Id: <input type="hidden" value={Id} style={{display:"hidden"}}/>
+                            <input type="text"   id="yu" name="pname" value={pname} style={{marginLeft:"10px"}} onChange={(e)=>{setpName(e.target.value)}} />
+                            <input type="submit"/>
+                            </form>
     </>
   )
 }

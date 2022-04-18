@@ -1,4 +1,5 @@
-import React from 'react'
+import React,{ useState } from 'react'
+import axios from "axios"
 import logos from "./images/logo.jpg"
 import logins from "./images/Mobile-login-Cristina.jpg"
 import { useFormik } from 'formik';
@@ -6,7 +7,38 @@ import * as yup from 'yup';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
-   
+  
+  //grand code
+  const [ email, setName ] = useState("")
+	const [	password, setpass ] = useState("")
+
+  let err= "";  
+	async function postName(e) {
+		e.preventDefault()
+		try {
+			const res = await axios.post("http://localhost:5000/api/auth", {
+				email,password
+      } )
+      if(res.status===210 && res.data.r === "1"){
+        window.location.href = "/patient_dashboard"; 
+      }           
+      // if(res.status===210 && res.data.r === "2"){
+      //   window.location.href = "/AdminDesk"; 
+      // } 
+      
+		} catch (error) {
+      err=error;
+			console.error(error)
+      console.log(error.response.data);
+		}
+    if (err.match("")){
+      console.log("done");
+    }
+	}
+
+ //grand code
+
+
   const formik=useFormik({
 
     initialValues:{
@@ -72,18 +104,17 @@ const Login = () => {
 		<input id="tab-2" type="radio" name="tab" class="sign-up"/><label for="tab-2" class="tab"></label>
 		<div class="login-form">
 			<div class="sign-in-htm">
-                <form action="">
-
-               
+                
+     <form action="#" method="post" onSubmit={postName}>               
 				<div class="group">
               
 					<div><label for="user" class="label" style={{textAlign:"left"}}>Username {formik.touched.Name && formik.errors.Name ? <span style={{color:'red',fontFamily:"sans-serif",fontWeight:"bold",fontSize:"15px",marginLeft:"5px"}}>{formik.errors.Name}</span> : null}</label>   </div>
-					<input id="user" name="uname" type="text" class="input" placeholder='Enter Username' required {...formik.getFieldProps("Name")}/>
+					<input id="user" name="uname" type="text" class="input" placeholder='Enter Username' value={email} onChange={(e) => setName(e.target.value)} required />
                    
 				</div>
 				<div class="group">
 					<label for="pass" class="label" style={{textAlign:"left"}}>Password {formik.touched.Name && formik.errors.Pass ? <span style={{color:'red',fontFamily:"sans-serif",fontWeight:"bold",fontSize:"15px",marginLeft:"5px"}}>{formik.errors.Pass}</span> : null}</label>
-					<input id="pass" type="password" class="input" data-type="password" placeholder='Enter Password' required {...formik.getFieldProps("Pass")}/>
+					<input id="pass" type="password" class="input" data-type="password" placeholder='Enter Password'  value={password} onChange={(e) => setpass(e.target.value)} required />
 				</div>
 				<div class="group">
 					<input type="submit" style={{background:"#FFA500", borderRadius:"25px",padding:"12px 16px", width:"100%",color:"white"}} value="LOGIN"/>

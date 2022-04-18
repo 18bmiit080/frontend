@@ -1,28 +1,19 @@
 import React from 'react'
-import logos from "./images/logo.jpg"
-import { Link } from 'react-router-dom';
-const Dasha_rec = () => {
+
+const Doc_shed = () => {
   return (
     <>
-    <Link to="/frontend/dasha_rep/add_rec"><button class="btn btn-success" style={{marginLeft:"800px",marginTop:"130px"}}>ADD</button></Link>
-    <div class="container-fluid pt-4 px-4 " style={{marginLeft:"30px",marginTop:"10px"}}>
-                    <div class="col-12">
-                        <div class="bg-light rounded h-100 p-4">
-                            <div class="table table-hover">
+
+<div class="table table-hover" style={{marginLeft:"180px",marginTop:"100px",width:"80%"}}>
                                 <div class="table table-bordered">
                                 <div class="table-responsive">
-                                <table class="table">
+                                <table class="table" >
                                     <thead>
                                         <tr>
-                                            <th scope="col">SR.NO</th>
-                                            <th scope="col">RECEPTIONIST NAME</th>
-                                            <th scope="col">ADDRESS</th>
-                                            <th scope="col">GENDER</th>
-                                            <th scope="col">EMAIL</th>
-                                            <th scope="col">CONTACT NO</th>
-                                            <th scope="col">QUALIFICATION</th>
-                                            <th scope="col">D_O_J</th>
-                                            <th scope="col">Action</th>
+                                            <th scope="col">PATIENT_ID</th>
+                                            <th scope="col">PATIENT NAME</th>
+                                            <th scope="col">DATE</th>
+                                            <th scope="col">TIMING</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -33,8 +24,6 @@ const Dasha_rec = () => {
                                             <td>jhon@email.com</td>
                                             <td>USA</td>
                                             <td>123</td>
-                                            <td>123</td>
-                                            <td>123</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">2</th>
@@ -43,8 +32,6 @@ const Dasha_rec = () => {
                                             <td>mark@email.com</td>
                                             <td>UK</td>
                                             <td>456</td>
-                                            <td>123</td>
-                                            <td>123</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">3</th>
@@ -53,22 +40,15 @@ const Dasha_rec = () => {
                                             <td>jacob@email.com</td>
                                             <td>AU</td>
                                             <td>789</td>
-                                            <td>123</td>
-                                            <td>123</td>
-
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                                 </div>
                            
-                            </div>  
-                        </div>
-                    </div>
-                </div>
-    
+                            </div> 
     </>
   )
 }
 
-export default Dasha_rec
+export default Doc_shed

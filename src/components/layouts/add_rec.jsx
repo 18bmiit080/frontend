@@ -31,7 +31,7 @@ const Add_rec = () => {
                 <div class="row mt-2">
                     <div class="col-md-6"><label class="labels">Password</label><input type="password" data-type="password"  class="form-control" style={{width:"200%",fontSize:"15px",height:"40px",boxShadow: "none",focusBorderColor: "#BA68C8"}}/></div>
                 </div>
-                <div class="mt-5 text-center"><button class="btn btn-success" type="button ">ADD</button></div>
+                <div class="mt-5 text-center"><Link to="/frontend/dasha_rec"><button class="btn btn-success" type="button ">ADD</button></Link></div>
                 </form>
                 
             </div>

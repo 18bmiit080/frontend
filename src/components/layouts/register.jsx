@@ -1,73 +1,84 @@
-import React from 'react'
+import React,{ useState } from 'react'
+import axios from "axios"
 import logos from "./images/logo.jpg"
 import registers from "./images/register.jpg"
-import { useFormik } from 'formik';
 import {Link, Outlet} from 'react-router-dom'
 import * as yup from 'yup';
+
+
 const Register = () => {
+  const [fromData, setFormData] = useState({
+    pname: "",
+    address: "",
+    contact_no:"",
+    email:"",
+    password:"",
+    role:"1",
+  });
+
+  const {
+    pname,
+    address,
+    contact_no,
+    email,
+    password,
+    role,
+  } = fromData;
+
+  const onChange = (e) =>
+    setFormData({ ...fromData, [e.target.name]: e.target.value });
+
+  let save = async (e) => {
+    e.preventDefault();
+    
+      const newUser = {
+        pname,
+        address,
+        contact_no,
+        email,
+        password,
+        role,
+      };
+      try {
+        console.log(newUser);
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const body = JSON.stringify(newUser);
+        console.log(body);
+        const res = await axios.post(
+          "api/user",
+          body,
+          config
+        );
+        if (res.status === 201) {
+          console.log("Login Success");
+          window.location.href = "/login";
+        } else {
+          //put alert
+        }
+      } catch (err) {
+        console.error(err.response.data);
+      }
+    
+  };
       
-  const formik=useFormik({
-
-    initialValues:{
-
-      Name:'',
-      Address:'',
-      Email:'',
-      Pass:'',
-      Contact:'',
-    },
-
-    validationSchema: yup.object({
-
-      Name: yup.string()
-
-        .required('*')
-
-        .matches(/^[aA-zZ\s]+$/, "Only alphabets"),
-      Address: yup.string()
-        
-      .required('*'),
-
-      Email: yup.string()
-        
-      .required('*')
-      .matches(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,"Invalid Email Id")
-      ,
-
-
-       Pass: yup.string()
-
-       .required('*')
-       .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$/,"must contain 1 Uppercase,1 Lowercase,1 Number, 1 Symbol, Min 8"),
-
-       Contact: yup.string()
-
-       .required('*')
-       .matches(/[6789][0-9]{9,9}$/,"Invalid Phone Number"),
-
-
-    }),
-
-    onSubmit:values=>{
-
-      alert(JSON.stringify(values));
-
-    }
-
-  }); 
-    function GetSelectedTextValue() 
-  {
-    var x = document.getElementById("ddlSuggestion");
-var selectedValue = x.value;
-if(selectedValue=="od")
-{
-document.getElementById("txtComments").style.display = "block";
-}
-else
-{
-document.getElementById("txtComments").style.display = "none";
-}
-}
+  
+//     function GetSelectedTextValue() 
+//   {
+//     var x = document.getElementById("ddlSuggestion");
+// var selectedValue = x.value;
+// if(selectedValue=="od")
+// {
+// document.getElementById("txtComments").style.display = "block";
+// }
+// else
+// {
+// document.getElementById("txtComments").style.display = "none";
+// }
+// }
   return (
     <>
 <header id="menu-jk">
@@ -104,38 +115,42 @@ document.getElementById("txtComments").style.display = "none";
 		<input id="tab-2" type="radio" name="tab" class="sign-up"/><label for="tab-2" class="tab"></label>
 		<div class="login-form">
 			<div class="sign-in-htm">
-            <form action="/patient_dashboard">
+     
+     
+      <form action="#" method="post" onSubmit={save}> 
 				<div class="group">
-					<label for="user" class="label" style={{textAlign:"left",fontSize:"15px"}}>Patient Name  {formik.touched.Name && formik.errors.Name ? <span style={{color:'red',fontFamily:"sans-serif",fontWeight:"bold",fontSize:"15px",marginLeft:"5px"}}>{formik.errors.Name}</span> : null}</label>
-                    <input  id="user" type="text" class="input" placeholder='Enter Name' style={{fontSize:"15px"}} required {...formik.getFieldProps("Name")}/>
+					<label for="user" class="label" style={{textAlign:"left",fontSize:"15px"}}>Patient Name  </label>
+                    <input  id="user" name="pname" type="text" class="input" placeholder='Enter Name' style={{fontSize:"15px"}} required value={pname} onChange={(e) => onChange(e)}/>
 				</div>
 				<div class="group">
-					<label for="user" class="label" style={{textAlign:"left",fontSize:"15px"}}>Address   {formik.touched.Address && formik.errors.Address? <span style={{color:'red',fontFamily:"sans-serif",fontWeight:"bold",fontSize:"15px",marginLeft:"5px"}}>{formik.errors.Address}</span> : null}</label>
-                    <input  id="user" type="textarea" class="input" placeholder='Enter Address' style={{fontSize:"15px"}} required {...formik.getFieldProps("Address")}/>
+					<label for="user" class="label" style={{textAlign:"left",fontSize:"15px"}}>Address   </label>
+                    <input  type="textarea"  class="input" placeholder='Enter Address' style={{fontSize:"15px"}} required name="address" value={address} onChange={(e) => onChange(e)}/>
 				</div>
                 <div class="group">
 					<label for="user" class="label" style={{textAlign:"left",fontSize:"15px"}}>Gender</label>
                     <div class="label">
-                    <div class="label"> <label for="html" style={{textAlign:"left",fontSize:"15px"}}>Male</label> <input type="radio" id="Male" name="Gender" value="M"  style={{marginLeft:"10px"}}/> <label for="html" style={{marginLeft:"20px"}}>Female</label> <input type="radio" id="Female" name="Gender" value="F" style={{marginLeft:"10px"}} /> </div>
+                    <div class="label"> <label for="html" style={{textAlign:"left",fontSize:"15px"}}>Male</label> <input type="radio" id="Male" value="M"  style={{marginLeft:"10px"}} onChange={(e) => onChange(e)} /> <label for="html" style={{marginLeft:"20px"}}>Female</label> <input type="radio" id="Female" name="Gender" value="F" style={{marginLeft:"10px"}}  /> </div>
                     <div class="label">  </div>
                     </div>
                    
 				</div>
                 <div class="group">
-					<label for="user" class="label" style={{textAlign:"left",fontSize:"15px"}}>Email {formik.touched.Email && formik.errors.Email ? <span style={{color:'red',fontFamily:"sans-serif",fontWeight:"bold",fontSize:"15px",marginLeft:"5px"}}>{formik.errors.Email}</span> : null}</label>
-                    <input  id="user" type="email" class="input" placeholder='Enter Email' style={{fontSize:"15px"}} required {...formik.getFieldProps("Email")}/>
+					<label for="user" class="label" style={{textAlign:"left",fontSize:"15px"}}>Email </label>
+                    <input  id="user" name="email" type="email" class="input" placeholder='Enter Email' style={{fontSize:"15px"}} required value={email} onChange={(e) => onChange(e)}/>
 				</div>
                 <div class="group">
-					<label for="pass" class="label" style={{textAlign:"left",fontSize:"15px"}}>Password {formik.touched.Pass && formik.errors.Pass ? <span style={{color:'red',fontFamily:"sans-serif",fontWeight:"bold",fontSize:"15px",marginLeft:"5px"}}>{formik.errors.Pass}</span> : null}</label>
-					<input id="pass" type="password" class="input" data-type="password" placeholder='Enter Password' style={{fontSize:"15px"}} required {...formik.getFieldProps("Pass")}/>
+					<label for="pass" class="label" style={{textAlign:"left",fontSize:"15px"}}>Password </label>
+					<input id="pass" type="password" class="input" name="password"  data-type="password" placeholder='Enter Password' style={{fontSize:"15px"}} required value={password} onChange={(e) => onChange(e)}/>
 				</div>
                 <div class="group">
-					<label for="user" class="label" style={{textAlign:"left",fontSize:"15px"}}>Contact No {formik.touched.Contact && formik.errors.Contact ? <span style={{color:'red',fontFamily:"sans-serif",fontWeight:"bold",fontSize:"15px",marginLeft:"5px"}}>{formik.errors.Contact}</span> : null}</label>
-                    <input  id="user" type="tel" class="input" placeholder='Enter Contact' style={{fontSize:"15px"}} required {...formik.getFieldProps("Contact")}/>
+					<label for="user" class="label" style={{textAlign:"left",fontSize:"15px"}}>Contact No </label>
+                    <input  id="user" type="tel" class="input" name="contact_no" placeholder='Enter Contact' style={{fontSize:"15px"}} required value={contact_no} onChange={(e) => onChange(e)}/>
 				</div>
+        <input  id="user" type="textarea" class="input"  name="role" placeholder='Enter Address' style={{fontSize:"15px",display:"none"}} required value={role} onChange={(e) => onChange(e)}/>
+
                 <div class="group" style={{padding:"0px 16px",background:"00ab9f",display:"block"}}>
-					<label for="user" class="label" style={{textAlign:"left",fontSize:"15px"}}>Reference By</label>
-                    <select style={{width:"100%",color:"black",display:"block",borderRadius:"25px",padding:"12px 16px",background:"rgba(255,255,255,.1)"}} name="color" id="ddlSuggestion" onChange={GetSelectedTextValue}> 
+					<label for="user" name="abc" class="label" style={{textAlign:"left",fontSize:"15px"}}>Reference By</label>
+                    <select style={{width:"100%",color:"black",display:"block",borderRadius:"25px",padding:"12px 16px",background:"rgba(255,255,255,.1)",display:""}}  id="ddlSuggestion"  > 
                     <option style={{padding:"12px 16px",background:"00ab9f"}}>---SELECT---</option>  
                     <option style={{padding:"12px 16px",background:"00ab9f"}} value="od"   >Other Doctor</option>
                     <option style={{padding:"12px 16px",background:"00ab9f"}} value="relative">Relatives</option>
@@ -145,7 +160,7 @@ document.getElementById("txtComments").style.display = "none";
 				</div>
                 
 				<div class="group">
-					<input type="text"   color="white" placeholder="Doctor Name" id="txtComments" class="input" style={{display:"none"}} required {...formik.getFieldProps("dname")}/>
+					<input type="text"   color="white" placeholder="Doctor Name" id="txtComments" class="input" style={{display:"none"}}  />
 				</div>
 
 				<div class="group">

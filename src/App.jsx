@@ -30,25 +30,32 @@ import Register from './components/layouts/register';
 import Patient_dashboard from './components/layouts/patient_dashboard';
 import Otp from './components/layouts/otp';
 import Add_rec from './components/layouts/add_rec';
+import Notify_pat from './components/layouts/notify_pat';
+import Doc_shed from './components/layouts/doc_shed';
 const App = () => {
   return (
    <>
+
+   {/* <Dashr_doc/> */}
+
+
+   {/* <Notify_pat/> */}
    {/* <Home/> */}
-   
-   <Routes>
+  
+    <Routes>
    <Route path="/" element={<Home/>}/>
    <Route path="/login" element={<Login/>}/>
    <Route path="/register" element={<Register/>}/>
-     </Routes>
+     </Routes> 
 
-     <Routes>
+      <Routes>
    <Route path="/login" />
    <Route path="/index"  />
    <Route path="/register" />
   <Route path="/otp" element={<Otp/>} />
-     </Routes>
+     </Routes> 
 
-     <Routes>
+      <Routes>
    <Route path="/register" />
    <Route path="/index" element={<Home/>} />
    <Route path="/login"/>
@@ -63,27 +70,28 @@ const App = () => {
    <Routes>
      <Route path="/frontend" element={<Frontend/>}>
      <Route index element={<Dasha/>} />
-     <Route path="/dasha_pat" element={<Dasha_pat/>} />
-     <Route path="dasha_doc" element={<Dasha_doc/>} />
-     <Route path="dasha_rec" element={<Dasha_rec/>} />
-     <Route path="dasha_pro" element={<Dasha_pro/>} />
-     <Route path="dasha_rep" element={<Dasha_rep/>} />
-     <Route path="login" element={<Login/>} />
-     <Route path="add_rec" element={<Add_rec/>} />
+     <Route path="/frontend/dasha_pat" element={<Dasha_pat/>} />
+     <Route path="/frontend/dasha_doc" element={<Dasha_doc/>} />
+     <Route path="/frontend/dasha_rec" element={<Dasha_rec/>} />
+     <Route path="/frontend/dasha_pro" element={<Dasha_pro/>} />
+     <Route path="/frontend/dasha_rep" element={<Dasha_rep/>} />
+     <Route path="/frontend/login" element={<Login/>} />
+     <Route path="/frontend/dasha_rep/add_rec" element={<Add_rec/>} />
      </Route>
      </Routes>  
      
-     {/* <Routes>
-     <Route path="/" element={<Receptionist_frontend/>}>
+     <Routes>
+     <Route path="/receptionist_frontend" element={<Receptionist_frontend/>}>
      <Route index element={<Dashr/>} />
-     <Route path="Dashr_pat" element={<Dashr_pat/>} />
-     <Route path="Dashr_doc" element={<Dashr_doc/>} />
-     <Route path="Dashr_not" element={<Dashr_not/>} />
-     <Route path="Dashr_pro" element={<Dashr_pro/>} />
-     <Route path="Add_ser" element={<Add_ser/>} />
-     <Route path="Login" element={<Login/>} />
+     <Route path="/receptionist_frontend/dashr_pat" element={<Dashr_pat/>} />
+     <Route path="/receptionist_frontend/dashr_doc" element={<Dashr_doc/>} />
+     <Route path="/receptionist_frontend/dashr_not" element={<Dashr_not/>} />
+     <Route path="/receptionist_frontend/dashr_pro" element={<Dashr_pro/>} />
+     <Route path="/receptionist_frontend/add_ser" element={<Add_ser/>} />
+     <Route path="/receptionist_frontend/dashr_doc/doc_shed" element={<Doc_shed/>} />
+     <Route path="/receptionist_frontend/Login" element={<Login/>} />
      </Route>
-     </Routes>   */}
+     </Routes>    
      
      
      
